@@ -91,3 +91,37 @@ export const fetchLoginTrends = async (
   //   ],
   // }
 };
+
+export const fetchAuthSuccessCount = async (source_host: string) => {
+  const res = await fetch(
+    `${API_URL}/auth-success-count?source_host=${source_host}`
+  );
+  if (!res.ok) throw new Error("Failed to fetch auth success count");
+  return await res.json();
+};
+
+export const fetchAuthStatusSummary = async (source_host: string) => {
+  const res = await fetch(
+    `${API_URL}/auth-status-summary?source_host=${source_host}`
+  );
+  if (!res.ok) throw new Error("Failed to fetch auth status summary");
+  return await res.json();
+};
+
+export const fetchSuccessByDestinationPie = async (source_host: string) => {
+  const res = await fetch(
+    `${API_URL}/success-by-destination-pie?source_host=${source_host}`
+  );
+  if (!res.ok)
+    throw new Error("Failed to fetch success by destination pie data");
+  return await res.json();
+};
+
+export const fetchSuccessByDestinationBar = async (source_host: string) => {
+  const res = await fetch(
+    `${API_URL}/success-by-destination-bar?source_host=${source_host}`
+  );
+  if (!res.ok)
+    throw new Error("Failed to fetch success by destination bar data");
+  return await res.json();
+};
