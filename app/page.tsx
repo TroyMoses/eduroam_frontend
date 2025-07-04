@@ -2,7 +2,6 @@ import { Suspense } from "react";
 import HeroSection from "@/components/sections/hero-section";
 import StatsSection from "@/components/sections/stats-section";
 import ChartsSection from "@/components/sections/charts-section";
-import PieChartsSection from "@/components/sections/pie-charts-section";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Home() {
@@ -29,8 +28,6 @@ export default function Home() {
       >
         <ChartsSection />
       </Suspense>
-
-      <PieChartsSection />
     </main>
   );
 }

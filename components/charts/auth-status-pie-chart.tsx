@@ -24,7 +24,7 @@ export default function AuthStatusPieChart({
     const loadData = async () => {
       try {
         setLoading(true);
-        const result = await fetchAuthStatusSummary(source_host);
+        const result = await fetchAuthStatusSummary();
 
         // Transform data for recharts
         const transformedData = result.labels.map(
@@ -33,7 +33,7 @@ export default function AuthStatusPieChart({
             value: result.datasets[0].data[index],
             color:
               result.datasets[0].backgroundColor[index] ||
-              (label === "Access-Accept" ? "#10b981" : "#ef4444"),
+              (label === "Access-Reject" ? "#10b981" : "#ef4444"),
           })
         );
 

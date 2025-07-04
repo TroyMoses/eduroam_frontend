@@ -62,34 +62,6 @@ export const fetchLoginTrends = async (
   );
   if (!res.ok) throw new Error("Failed to fetch login trends");
   return await res.json();
-
-  // Mock data based on interval
-  // let labels: string[] = []
-  // let data: number[] = []
-
-  // if (interval === "day") {
-  //   labels = ["12 AM", "2 AM", "4 AM", "6 AM", "8 AM", "10 AM", "12 PM", "2 PM", "4 PM", "6 PM", "8 PM", "10 PM"]
-  //   data = [42, 28, 15, 35, 85, 120, 95, 110, 105, 80, 65, 50]
-  // } else if (interval === "week") {
-  //   labels = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-  //   data = [520, 580, 610, 590, 650, 420, 380]
-  // } else if (interval === "month") {
-  //   labels = ["Week 1", "Week 2", "Week 3", "Week 4"]
-  //   data = [2200, 2350, 2500, 2400]
-  // }
-
-  // return {
-  //   labels,
-  //   datasets: [
-  //     {
-  //       label: "Number of Logins",
-  //       data,
-  //       fill: true,
-  //       backgroundColor: "rgba(75, 192, 192, 0.2)",
-  //       borderColor: "rgba(75, 192, 192, 1)",
-  //     },
-  //   ],
-  // }
 };
 
 export const fetchAuthSuccessCount = async (source_host: string) => {
@@ -100,9 +72,17 @@ export const fetchAuthSuccessCount = async (source_host: string) => {
   return await res.json();
 };
 
-export const fetchAuthStatusSummary = async (source_host: string) => {
+// export const fetchAuthStatusSummary = async (source_host: string) => {
+//   const res = await fetch(
+//     `${API_URL}/auth-status-summary?source_host=${source_host}`
+//   );
+//   if (!res.ok) throw new Error("Failed to fetch auth status summary");
+//   return await res.json();
+// };
+
+export const fetchAuthStatusSummary = async () => {
   const res = await fetch(
-    `${API_URL}/auth-status-summary?source_host=${source_host}`
+    `${API_URL}/auth-status-summary`
   );
   if (!res.ok) throw new Error("Failed to fetch auth status summary");
   return await res.json();
