@@ -8,7 +8,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Select,
   SelectContent,
@@ -18,13 +17,11 @@ import {
 } from "@/components/ui/select";
 import TopUsersChart from "@/components/charts/top-users-chart";
 import LoginTrendsChart from "@/components/charts/login-trends-chart";
-import ActiveUsersChart from "@/components/charts/active-users-chart";
 import { Skeleton } from "@/components/ui/skeleton";
 import AuthSuccessCountCard from "@/components/charts/auth-success-count-card";
 import AuthStatusPieChart from "@/components/charts/auth-status-pie-chart";
 import SuccessByDestinationPieChart from "@/components/charts/success-by-destination-pie-chart";
 import SuccessByDestinationBarChart from "@/components/charts/success-by-destination-bar-chart";
-import DeviceDistributionChart from "@/components/charts/device-distribution-chart";
 
 // Source host mapping
 const SOURCE_HOST_MAP = {
@@ -123,17 +120,16 @@ export default function ChartsSection() {
         >
           <div className="space-y-2">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-              Data Visualization
+              Analytics Dashboard
             </h2>
             <p className="max-w-[700px] text-muted-foreground md:text-xl">
-              Interactive charts and graphs to help you understand your network
-              usage patterns
+              Real-time insights and analytics for your Eduroam network usage
             </p>
           </div>
         </div>
 
         {/* Source Host Selection */}
-        <div className="flex justify-center mb-8" data-aos="fade-up">
+        <div className="flex justify-center mb-12" data-aos="fade-up">
           <div className="w-full max-w-md">
             <label
               htmlFor="source-host-select"
@@ -159,88 +155,49 @@ export default function ChartsSection() {
           </div>
         </div>
 
-        <Tabs defaultValue="users" className="w-full">
-          <div className="flex justify-center mb-8" data-aos="fade-up">
-            <TabsList>
-              <TabsTrigger value="users">Top Users</TabsTrigger>
-              <TabsTrigger value="logins">Login Trends</TabsTrigger>
-              <TabsTrigger value="active">Active Users</TabsTrigger>
-            </TabsList>
-          </div>
-
-          <div data-aos="fade-up" data-aos-delay="100">
-            <TabsContent value="users" className="mt-0">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Top Users by Connection Time</CardTitle>
-                  <CardDescription>
-                    The users with the most connection time on the network for{" "}
-                    {selectedSourceName}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="pt-4">
-                  <Suspense
-                    fallback={<Skeleton className="h-[350px] w-full" />}
-                  >
-                    <TopUsersChart source_host={selectedSourceHost} />
-                  </Suspense>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="logins" className="mt-0">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Login Trends Over Time</CardTitle>
-                  <CardDescription>
-                    Number of logins over different time periods for{" "}
-                    {selectedSourceName}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="pt-4">
-                  <Suspense
-                    fallback={<Skeleton className="h-[350px] w-full" />}
-                  >
-                    <LoginTrendsChart source_host={selectedSourceHost} />
-                  </Suspense>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="active" className="mt-0">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Active Users by Hour</CardTitle>
-                  <CardDescription>
-                    Number of active users throughout the day for{" "}
-                    {selectedSourceName}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="pt-4">
-                  <Suspense
-                    fallback={<Skeleton className="h-[350px] w-full" />}
-                  >
-                    <ActiveUsersChart source_host={selectedSourceHost} />
-                  </Suspense>
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </div>
-        </Tabs>
-
         {/* Authentication Success Count Card */}
-        <div className="mt-12" data-aos="fade-up">
+        <div className="mb-12" data-aos="fade-up">
           <AuthSuccessCountCard source_host={selectedSourceHost} />
         </div>
 
-        {/* New Analytics Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+        {/* Main Charts Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+          <Card data-aos="fade-right">
+            <CardHeader>
+              <CardTitle>Top Users by Login Count</CardTitle>
+              <CardDescription>
+                Users with the most login attempts for {selectedSourceName}
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="pt-4">
+              <Suspense fallback={<Skeleton className="h-[350px] w-full" />}>
+                <TopUsersChart source_host={selectedSourceHost} />
+              </Suspense>
+            </CardContent>
+          </Card>
+
+          <Card data-aos="fade-left">
+            <CardHeader>
+              <CardTitle>Login Trends Over Time</CardTitle>
+              <CardDescription>
+                Login activity patterns for {selectedSourceName}
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="pt-4">
+              <Suspense fallback={<Skeleton className="h-[350px] w-full" />}>
+                <LoginTrendsChart source_host={selectedSourceHost} />
+              </Suspense>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Authentication Analytics Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
           <Card data-aos="fade-right">
             <CardHeader>
               <CardTitle>Authentication Status</CardTitle>
               <CardDescription>
-                Distribution of successful vs failed authentications for{" "}
-                {selectedSourceName}
+                Success vs failure rate for {selectedSourceName}
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -254,7 +211,7 @@ export default function ChartsSection() {
             <CardHeader>
               <CardTitle>Success by Destination</CardTitle>
               <CardDescription>
-                Successful logins distribution by destination host for{" "}
+                Successful login distribution by destination for{" "}
                 {selectedSourceName}
               </CardDescription>
             </CardHeader>
@@ -268,13 +225,13 @@ export default function ChartsSection() {
           </Card>
         </div>
 
-        {/* Top Visited Locations Bar Chart */}
-        <div className="mt-8" data-aos="zoom-in">
+        {/* Top Destinations Bar Chart */}
+        <div className="mb-12" data-aos="zoom-in">
           <Card>
             <CardHeader>
-              <CardTitle>Top Visited Locations</CardTitle>
+              <CardTitle>Top Destination Hosts</CardTitle>
               <CardDescription>
-                Most visited destination hosts by successful logins for{" "}
+                Most accessed destination hosts by successful logins for{" "}
                 {selectedSourceName}
               </CardDescription>
             </CardHeader>
@@ -284,40 +241,6 @@ export default function ChartsSection() {
                   source_host={selectedSourceHost}
                 />
               </Suspense>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Existing Device Distribution and Network Traffic Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-          <Card data-aos="fade-right">
-            <CardHeader>
-              <CardTitle>Device Distribution</CardTitle>
-              <CardDescription>
-                Types of devices connecting to the network at{" "}
-                {selectedSourceName}
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <DeviceDistributionChart />
-            </CardContent>
-          </Card>
-
-          <Card data-aos="fade-left">
-            <CardHeader>
-              <CardTitle>Network Traffic</CardTitle>
-              <CardDescription>
-                Network traffic volume over time for {selectedSourceName}
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="aspect-square relative">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <p className="text-muted-foreground">
-                    Area chart will be displayed here
-                  </p>
-                </div>
-              </div>
             </CardContent>
           </Card>
         </div>
